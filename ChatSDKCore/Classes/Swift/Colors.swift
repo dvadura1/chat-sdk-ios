@@ -31,7 +31,10 @@ import Foundation
     @objc public static let loginTextFieldBackgroundColor = "loginTextFieldBackgroundColor"
 
     @objc public static func get(name: String) -> UIColor? {
-        return UIColor(named: name, in: BChatSDK.shared().colorsBundle, compatibleWith: nil)
+        if #available(iOS 11.0, *) {
+            return UIColor(named: name, in: BChatSDK.shared().colorsBundle, compatibleWith: nil)
+        } else {
+            return .black
+        }
     }
-    
 }
