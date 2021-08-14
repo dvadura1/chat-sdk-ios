@@ -8,7 +8,7 @@
 import Foundation
 import RxSwift
 
-public protocol MessagesModelDelegate {
+public protocol ChatModelDelegate: class {
     
     var model: ChatModel? {
         get set
@@ -25,22 +25,25 @@ public protocol MessagesModelDelegate {
 
 open class MessagesModel {
     
-    public let thread: Thread
-    public let delegate: MessagesModelDelegate
+    public let conversation: Conversation
+    open weak var delegate: ChatModelDelegate?
     public let messageTimeFormatter = DateFormatter()
             
     open var onSelectionChange: (([AbstractMessage]) -> Void)?
     open var sectionNib: UINib? = ChatKit.provider().sectionNib()
     
     open var messageCellRegistrationsMap = [String: MessageCellRegistration]()
-    open var view: PMessagesView?
+    open weak var view: PMessagesView?
     
     open var adapter = MessagesListAdapter()
     
-    public init(_ thread: Thread, delegate: MessagesModelDelegate) {
-        self.thread = thread
-        self.delegate = delegate
+    public init(_ conversation: Conversation) {
+        self.conversation = conversation
         messageTimeFormatter.setLocalizedDateFormatFromTemplate(ChatKit.config().timeFormat)
+    }
+    
+    open func setDelegate(_ delegate: ChatModelDelegate) {
+        self.delegate = delegate
     }
             
     open func registerMessageCell(registration: MessageCellRegistration) {
@@ -95,11 +98,11 @@ open class MessagesModel {
     }
     
     open func onClick(_ message: AbstractMessage) -> Bool {
-        return delegate.onClick(message)
+        return delegate?.onClick(message) ?? false
     }
     
     open func showAvatar() -> Bool {
-        return thread.threadType() != .private1to1
+        return conversation.conversationType() != .private1to1
     }
     
     open func bundle() -> Bundle {
@@ -124,8 +127,9 @@ open class MessagesModel {
     }
         
     open func loadInitialMessages() {
-        let messages = delegate.initialMessages()
-        _ = addMessages(toEnd: messages, updateView: true, animated: false).subscribe()
+        if let messages = delegate?.initialMessages() {
+            _ = addMessages(toEnd: messages, updateView: true, animated: false).subscribe()
+        }
     }
     
     open func messageExists(_ message: AbstractMessage) -> Bool {
@@ -188,7 +192,15 @@ extension MessagesModel {
     }
     
     open func loadMessages() -> Single<[AbstractMessage]> {
-        return delegate.loadMessages(with: adapter.oldestMessage())
+        Single.deferred({ [weak self] in
+            if let delegate = self?.delegate, let adapter = self?.adapter {
+                return delegate.loadMessages(with: adapter.oldestMessage())
+            }
+            return Single.create(subscribe: { single in
+                single(.success([]))
+                return Disposables.create()
+            })
+        })
     }
 
     open func removeMessage(_ message: AbstractMessage, animated: Bool = true) -> Completable {
@@ -206,7 +218,15 @@ extension MessagesModel {
             return self?.synchronize(animated) ?? Completable.empty()
         })
      }
-    
+
+    open func removeAllMessages(animated: Bool = true) -> Completable {
+        return Completable.deferred({ [weak self] in
+            self?.adapter.removeAllMessages()
+            self?.notifySelectionChanged()
+            return self?.synchronize(animated) ?? Completable.empty()
+        })
+     }
+
     open func synchronize(_ animated: Bool) -> Completable {
         return Completable.deferred({ [weak self] in
             var snapshot = NSDiffableDataSourceSnapshot<Section, AbstractMessage>()

@@ -88,11 +88,11 @@ static BChatSDK * instance;
 }
 
 -(void) initialize: (BConfiguration *) config app:(UIApplication *)application options:(NSDictionary *)launchOptions  modules: (NSArray<PModule> *) modules networkAdapter:(id<PNetworkAdapter>)networkAdapter interfaceAdapter:(id<PInterfaceAdapter>)interfaceAdapter {
+    
+    self.modules = modules;
 
     _configuration = config;
-    
-    [_moduleHelper activateCoreModules];
-    
+
     if(interfaceAdapter) {
         _interfaceAdapter = interfaceAdapter;
     }
@@ -109,6 +109,12 @@ static BChatSDK * instance;
             _interfaceAdapter = [((id<PInterfaceAdapterProvider>) module) getInterfaceAdapter];
         }
     }
+    
+    if (!_interfaceAdapter) {
+        [_moduleHelper activateUIModule];
+    }
+
+    [_moduleHelper activateCoreModules];
 
     for (id<PModule> module in modules) {
         [module activate];
@@ -325,6 +331,7 @@ static BChatSDK * instance;
 
 +(id<PInterfaceAdapter>) ui {
     return self.shared.interfaceAdapter;
+    
 }
 
 +(id<PStorageAdapter>) db {
