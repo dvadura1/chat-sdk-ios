@@ -18,7 +18,8 @@
 
 // The distance to the bottom of the screen you need to be for the tableView to snap you to the bottom
 #define bTableViewRefreshHeight 300
-#define bTableViewBottomMargin 5
+#define bTableViewBottomMargin 0
+#define bSendBarBottomMargin 12
 
 @interface ElmChatViewController ()
 
@@ -130,6 +131,7 @@
 }
 -(void) setupChatToolbar {
     _chatToolbar = [[BChatToolbar alloc] init];
+    return;
     [self.view addSubview:_chatToolbar];
     
     _chatToolbar.keepTopAlignTo(_sendBarView).equal = 0;
@@ -909,7 +911,7 @@
     [UIView commitAnimations];
     
     // Set the new constraints
-    _sendBarView.keepBottomInset.equal = keyboardBoundsConverted.size.height;
+    _sendBarView.keepBottomInset.equal = keyboardBoundsConverted.size.height + bSendBarBottomMargin;
     
     [[UIApplication sharedApplication].windows.lastObject addSubview: _keyboardOverlay];
     _keyboardOverlay.frame = keyboardBounds;
@@ -922,7 +924,7 @@
     [UIView setAnimationDuration:duration.doubleValue];
     [UIView setAnimationCurve:curve.integerValue];
 
-    CGFloat contentOffsetY = tableView.contentOffset.y + keyboardBoundsConverted.size.height - self.safeAreaBottomInset;
+    CGFloat contentOffsetY = tableView.contentOffset.y + keyboardBoundsConverted.size.height - self.safeAreaBottomInset + bSendBarBottomMargin;
 
     [tableView setContentOffset:CGPointMake(0, contentOffsetY)];
 
@@ -1026,7 +1028,7 @@
     CGRect keyboardBoundsConverted = [self.view convertRect:keyboardBounds toView:Nil];
 
     // Set the new constraints
-    _sendBarView.keepBottomInset.equal = keyboardBoundsConverted.size.height;
+    _sendBarView.keepBottomInset.equal = keyboardBoundsConverted.size.height + bSendBarBottomMargin;
     
     [[UIApplication sharedApplication].windows.lastObject addSubview: _keyboardOverlay];
     _keyboardOverlay.frame = keyboardBounds;

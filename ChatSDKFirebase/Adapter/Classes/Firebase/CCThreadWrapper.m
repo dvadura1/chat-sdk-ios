@@ -239,8 +239,10 @@
         if (![snapshot.value isEqual: [NSNull null]]) {
             // Update the thread
             CCUserWrapper * user = [CCUserWrapper userWithSnapshot:snapshot];
+            NSLog(@"%@", snapshot);
             [self.model addUser:user.model];
             [user metaOn];
+            [user onlineOn];
             [BHookNotification notificationThreadUsersUpdated:self.model];
         }
     }];

@@ -40,10 +40,10 @@
             textView.font = BChatSDK.config.messageTextFont;
         }
         
-        UIColor * linkColor = [BChatSDK.ui colorForName:bColorMessageLink];
-        if(linkColor) {
-            textView.linkTextAttributes = @{NSForegroundColorAttributeName: linkColor};
-        }
+//        UIColor * linkColor = [BChatSDK.ui colorForName:bColorMessageLink];
+//        if(linkColor) {
+            textView.linkTextAttributes = @{NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle)};
+//        }
         
 //        textView.contentInset = UIEdgeInsetsMake(-9.0, -5.0, 0.0, 0.0);
         
@@ -78,11 +78,20 @@
 #pragma Cell sizing static methods
 
 +(NSNumber *) messageContentHeight: (id<PElmMessage>) message maxWidth: (float) maxWidth {
-    return @([self getText: message.text heightWithFont:[UIFont systemFontOfSize:bDefaultFontSize] withWidth:[self messageContentWidth:message maxWidth:maxWidth].floatValue]);
+    UIFont *font = [UIFont systemFontOfSize:bDefaultFontSize];
+    if(BChatSDK.config.messageTextFont) {
+        font = BChatSDK.config.messageTextFont;
+    }
+    NSNumber *height = @([self getText: message.text heightWithFont:font withWidth:[self messageContentWidth:message maxWidth:maxWidth].floatValue]);
+    return height.floatValue < (18.0) ? [NSNumber numberWithFloat:18.0] : height;
 }
 
 +(NSNumber *) messageContentWidth: (id<PElmMessage>) message maxWidth: (float) maxWidth {
-    return @([self textWidth:message.text maxWidth:maxWidth]);
+    UIFont *font = [UIFont systemFontOfSize:bDefaultFontSize];
+    if(BChatSDK.config.messageTextFont) {
+        font = BChatSDK.config.messageTextFont;
+    }
+    return @([self textWidth:message.text withFont:font maxWidth:maxWidth]);
 }
 
 +(NSValue *) messageBubblePadding: (id<PElmMessage>) message {
@@ -113,9 +122,8 @@
                               context:Nil].size.height;
 }
 
-+(float) textWidth: (NSString *) text maxWidth: (float) maxWidth {
++(float) textWidth: (NSString *) text withFont: (UIFont *) font maxWidth: (float) maxWidth {
     if (text) {
-        UIFont * font = [UIFont systemFontOfSize:bDefaultFontSize];
         if (font) {
             return [text boundingRectWithSize:CGSizeMake(maxWidth, CGFLOAT_MAX)
                                       options:NSStringDrawingUsesLineFragmentOrigin

@@ -52,6 +52,7 @@
 -(void) becomeTextViewFirstResponder;
 -(void) setOptionsButtonHidden: (BOOL) hidden;
 -(void) setMicButtonEnabled: (BOOL) enabled;
+-(void) setMicButtonEnabled: (BOOL) enabled sendButtonEnabled: (BOOL) sendButtonEnabled;
 -(void) setReadOnly: (BOOL) readonly;
 
 @end

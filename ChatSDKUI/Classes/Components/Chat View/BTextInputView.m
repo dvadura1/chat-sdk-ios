@@ -10,7 +10,8 @@
 #import <ChatSDK/Core.h>
 #import <ChatSDK/UI.h>
 
-#define bMargin 8.0
+#define bMargin 24.0
+#define bVerticalMargin 8.0
 
 // The amount of padding (above + below) the text
 // i.e. textView height = text height + padding
@@ -71,7 +72,7 @@
         [self addSubview: _textView];
 
         // Add a send button
-        _sendButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        _sendButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [self addSubview: _sendButton];
         
         [_optionsButton setImage:[NSBundle uiImageNamed:@"icn_24_options"] forState:UIControlStateNormal];
@@ -97,42 +98,42 @@
         // Adjust the insets to make the text closer to the outside of the
         // box - ios6 is slightly different from ios7
         if ([UIDevice currentDevice].systemVersion.intValue < 7) {
-            _textView.contentInset = UIEdgeInsetsMake(-6.0, -4.0, -6.0, 0.0);
+//            _textView.contentInset = UIEdgeInsetsMake(-6.0, -4.0, -6.0, 0.0);
         }
         else {
-            _textView.contentInset = UIEdgeInsetsMake(-6.0, -1.0, -6.0, 0.0);
+//            _textView.contentInset = UIEdgeInsetsMake(-6.0, -1.0, -6.0, 0.0);
         }
 
         // Constrain the elements
-        _optionsButton.keepLeftInset.equal = bMargin +keepRequired;
+        _optionsButton.keepLeftInset.equal = (bMargin - 5) +keepRequired;
 
-        _optionsButton.keepBottomInset.equal = 8.0;
-        _optionsButton.keepHeight.equal = 24;
+        _optionsButton.keepBottomInset.equal = 0;
+        _optionsButton.keepHeight.equal = 40;
         
         // If the user has no chat options available then remove the chat option button width
-        _optionsButton.keepWidth.equal = BChatSDK.ui.chatOptions.count ? 24 : 0;
+        _optionsButton.keepWidth.equal = BChatSDK.ui.chatOptions.count ? 40 : 0;
         
         _optionsButton.translatesAutoresizingMaskIntoConstraints = NO;
         
-        _sendButton.keepRightInset.equal = bMargin;
+        _sendButton.keepRightInset.equal = bMargin - 5;
         _sendButton.keepBottomInset.equal = 0;
         _sendButton.keepHeight.equal = 40;
-        _sendButton.keepWidth.equal = 48;
+        _sendButton.keepWidth.equal = 40;
         _sendButton.translatesAutoresizingMaskIntoConstraints = NO;
                 
-        _textView.keepLeftOffsetTo(_optionsButton).equal = bMargin;
-        _textView.keepRightOffsetTo(_sendButton).equal = bMargin;
-        _textView.keepBottomInset.equal = bMargin;
-        _textView.keepTopInset.equal = bMargin;
+        _textView.keepLeftOffsetTo(_optionsButton).equal = 0;
+        _textView.keepRightOffsetTo(_sendButton).equal = 12;
+        _textView.keepBottomInset.equal = 1;
+        _textView.keepTopInset.equal = 2;
         _textView.translatesAutoresizingMaskIntoConstraints = NO;
 
         // Create a placeholder text label
         _placeholderLabel = [[UILabel alloc] init];
         [self addSubview:_placeholderLabel];
         
-        _placeholderLabel.keepBottomInset.equal = 0;
-        _placeholderLabel.keepTopInset.equal = 0;
-        _placeholderLabel.keepLeftOffsetTo(_optionsButton).equal = bMargin + 4;
+        _placeholderLabel.keepBottomInset.equal = 2;
+        _placeholderLabel.keepTopInset.equal = 2;
+        _placeholderLabel.keepLeftOffsetTo(_optionsButton).equal = 8;
         _placeholderLabel.keepWidth.equal = 200;
         [_placeholderLabel setBackgroundColor:[UIColor clearColor]];
         
@@ -159,17 +160,19 @@
         
         // DM lightGrayColor
         if (@available(iOS 13.0, *)) {
-            topMarginView.backgroundColor = [UIColor systemGray5Color];
+            topMarginView.backgroundColor = [UIColor colorWithDynamicProvider:^UIColor * _Nonnull(UITraitCollection * _Nonnull traitCollection) {
+                return traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark ? [UIColor colorWithRed:0.16 green:0.16 blue:0.16 alpha:1.0] : [UIColor colorWithRed:0.88 green:0.88 blue:0.88 alpha:1.0];
+            }];
         } else {
-            topMarginView.backgroundColor = [UIColor lightGrayColor];
+            topMarginView.backgroundColor = [UIColor colorWithRed:0.88 green:0.88 blue:0.88 alpha:1.0];
         }
         
         [self addSubview:topMarginView];
         
-        topMarginView.keepTopInset.equal = 0 + keepRequired;
-        topMarginView.keepLeftInset.equal = 0 + keepRequired;
-        topMarginView.keepRightInset.equal = 0 + keepRequired;
-        topMarginView.keepHeight.equal = 0.5 + keepRequired;
+        topMarginView.keepBottomInset.equal = 0.0 + keepRequired;
+        topMarginView.keepLeftInset.equal = 24.0 + keepRequired;
+        topMarginView.keepRightInset.equal = 24.0 + keepRequired;
+        topMarginView.keepHeight.equal = 1.0 + keepRequired;
         
         [self resizeToolbar];
     }
@@ -468,7 +471,7 @@
 
     // Set the toolbar height - the text view will resize automatically
     // using autolayout
-    self.keepHeight.equal = bMargin * 2 + textBoxHeight;
+    self.keepHeight.equal = textBoxHeight;
     
     float delta = self.keepHeight.equal - originalHeight;
     

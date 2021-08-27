@@ -86,7 +86,7 @@
 }
 
 -(BOOL) canFlagMessage {
-    return YES;
+    return NO;
 }
 
 @end

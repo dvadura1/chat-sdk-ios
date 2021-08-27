@@ -12,9 +12,9 @@
 // Size of the speech bubble tail
 #define bTailSize 5.0
 
-#define bTopCap 13
+#define bTopCap 17
 #define bLeftCapLeft 18
-#define bLeftCapRight 13
+#define bLeftCapRight 17
 
 #define bReadReceiptWidth 36
 #define bReadReceiptHeight 24
@@ -26,7 +26,7 @@
 #define bMaxMessageHeight 300
 #define bMinMessageHeight 50
 #define bUserNameHeight 25
-#define bProfilePictureDiameter 36
+#define bProfilePictureDiameter 32
 #define bMessageMarginX 70 // So it doesn't overlap the time stamp
 
 @interface BMessageCell : UITableViewCell {

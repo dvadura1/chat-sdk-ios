@@ -79,9 +79,15 @@
         UILabel * label = [[UILabel alloc] initWithFrame:rect];
         label.text = self.title;
         label.font = [UIFont systemFontOfSize:11];
+        if(BChatSDK.config.chatDateFont) {
+            label.font = BChatSDK.config.chatDateFont;
+        }
 
         // DM darkGrayColor
         label.textColor = [UIColor systemGrayColor];
+        if(BChatSDK.config.chatDateTextColor) {
+            label.textColor = BChatSDK.config.chatDateTextColor;
+        }
 
         label.textAlignment = NSTextAlignmentCenter;
 
@@ -98,11 +104,11 @@
         // DM
 //        innerView.backgroundColor = [BCoreUtilities colorWithHexString:@"#EEEEEE"];
 
-        if (@available(iOS 13.0, *)) {
-            innerView.backgroundColor = [UIColor systemGray5Color];
-        } else {
-            innerView.backgroundColor = [BCoreUtilities colorWithHexString:@"#EEEEEE"];
-        }
+//        if (@available(iOS 13.0, *)) {
+//            innerView.backgroundColor = [UIColor systemGray5Color];
+//        } else {
+//            innerView.backgroundColor = [BCoreUtilities colorWithHexString:@"#EEEEEE"];
+//        }
         
         innerView.layer.cornerRadius = 5;
 

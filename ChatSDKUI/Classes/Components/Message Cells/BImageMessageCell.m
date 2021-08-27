@@ -87,7 +87,7 @@
 }
 
 +(NSValue *) messageBubblePadding: (id<PElmMessage>) message {
-    return [NSValue valueWithUIEdgeInsets:UIEdgeInsetsMake(3.0, 3.0, 3.0, 3.0)];
+    return [NSValue valueWithUIEdgeInsets:UIEdgeInsetsMake(3.0, 3.0, 3.0, 24.0)];
 }
 
 @end

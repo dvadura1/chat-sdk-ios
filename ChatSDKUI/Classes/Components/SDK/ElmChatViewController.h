@@ -83,6 +83,8 @@
 
 -(instancetype) initWithDelegate: (id<ElmChatViewDelegate>) delegate_ nibName:(nullable NSString *)nibNameOrNil bundle:(nullable NSBundle *)nibBundleOrNil;
 
+-(void) setupNavigationBar;
+
 -(void) setTitle: (NSString *) title;
 -(void) setSubtitle: (NSString *) subtitle;
 

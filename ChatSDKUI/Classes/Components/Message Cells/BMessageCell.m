@@ -169,17 +169,17 @@
 //    NSLog(@"Position: %i", position);
     
     // We only want to show the user picture if it is the latest message from the user
-    if (position & BChatSDK.config.showMessageAvatarAtPosition) {
+    //if (position & BChatSDK.config.showMessageAvatarAtPosition) {
         if (message.userModel) {
             [_profilePicture loadAvatar:message.userModel];
         }
         if (!_profilePicture.image) {
             [_profilePicture setDefaultUserImage];
         }
-    }
-    else {
+    //}
+    /*else {
         _profilePicture.image = nil;
-    }
+    }*/
 
     if (@available(iOS 13.0, *)) {
         _profilePicture.backgroundColor = [UIColor systemBackgroundColor];
@@ -244,7 +244,7 @@
         float ppPadding = self.profilePicturePadding;
 
         [_profilePicture setFrame:CGRectMake(ppPadding,
-                                             (self.cellHeight - ppDiameter - self.nameHeight)/2.0,
+                                             self.cellHeight - ppDiameter - 6.0,
                                              ppDiameter,
                                              ppDiameter)];
         

@@ -48,7 +48,7 @@
         UIAlertAction * action = [UIAlertAction actionWithTitle:[NSBundle t:bCancel]
                                                               style:UIAlertActionStyleCancel
                                                             handler:^(UIAlertAction * action) {
-            [self dismissView];
+//            [self dismissView];
         }];
         [view addAction:action];
 

@@ -7,7 +7,7 @@ Pod::Spec.new do |s|
   s.author           = { "Ben Smiley" => "ben@chatsdk.co" }
   s.source           = { :git => "https://github.com/chat-sdk/chat-sdk-ios.git", :tag => '4.0.0' }
 
-  s.platform     = :ios, '11.0'
+  s.platform     = :ios, '10.3'
   s.swift_version = "5.0"
   # s.requires_arc = true
   s.static_framework = true

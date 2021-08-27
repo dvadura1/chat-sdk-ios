@@ -189,6 +189,9 @@ typedef enum {
 @property (nonatomic, readwrite) UIFont * threadTimeFont;
 @property (nonatomic, readwrite) UIFont * threadSubtitleFont;
 
+@property (nonatomic, readwrite) UIFont * chatDateFont;
+@property (nonatomic, readwrite) UIColor * chatDateTextColor;
+
 @property (nonatomic, readwrite) BOOL locationMessagesEnabled;
 @property (nonatomic, readwrite) BOOL imageMessagesEnabled;
 
