@@ -72,7 +72,7 @@
                                                                NSString * name = textField.text;
                                                                [BChatSDK.publicThread createPublicThreadWithName:name].thenOnMain(^id(id<PThread> thread) {
                                                                    __typeof__(self) strongSelf = weakSelf;
-                                                                   [strongSelf pushChatViewControllerWithThread:thread];
+                                                                   [strongSelf pushChatViewControllerWithThread:thread animated:YES];
                                                                    [MBProgressHUD hideHUDForView:strongSelf.view animated:YES];
                                                                    return Nil;
                                                                }, ^id(NSError * error) {

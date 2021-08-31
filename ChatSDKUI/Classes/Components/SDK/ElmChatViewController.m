@@ -1013,9 +1013,9 @@
 -(float) safeAreaBottomInset {
     // Move the text input up to avoid the bottom area
     if (@available(iOS 11, *)) {
-        return self.view.safeAreaInsets.bottom;
+        return MAX(self.view.safeAreaInsets.bottom, 24.0);
     }
-    return 0;
+    return 24.0;
 }
 
 -(void) keyboardWillChangeFrame: (NSNotification *) notification {
@@ -1072,7 +1072,9 @@
         
         if (scroll || force) {
             NSIndexPath * indexPath = [NSIndexPath indexPathForItem:lastRow inSection:lastSection];
-            [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:animated];
+//            [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:animated];
+            CGPoint offset = CGPointMake(0, self.tableView.contentSize.height - self.tableView.frame.size.height);
+            [self.tableView setContentOffset:offset];
         }
     });
 }

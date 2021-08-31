@@ -30,7 +30,7 @@
 -(instancetype) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil;
 
 -(void) updateLocalNotificationHandler;
--(void) pushChatViewControllerWithThread: (id<PThread>) thread;
+-(void) pushChatViewControllerWithThread: (id<PThread>) thread animated:(BOOL)animated;
 -(void) setEditingEnabled: (BOOL) enabled;
 -(void) toggleEditing;
 -(void) createThread;

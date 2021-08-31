@@ -215,14 +215,14 @@
 
 -(void) tableView:(UITableView *)tableView_ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     id<PThread> thread = _threads[indexPath.row];
-    [self pushChatViewControllerWithThread:thread];
+    [self pushChatViewControllerWithThread:thread animated:YES];
     [tableView_ deselectRowAtIndexPath:indexPath animated:YES];
 }
 
--(void) pushChatViewControllerWithThread: (id<PThread>) thread {
+-(void) pushChatViewControllerWithThread: (id<PThread>) thread animated:(BOOL)animated {
     if (thread) {
         UIViewController * vc = [BChatSDK.ui chatViewControllerWithThread:thread];
-        [self.navigationController pushViewController:vc animated:YES];
+        [self.navigationController pushViewController:vc animated:animated];
         // Stop multiple touches opening multiple chat views
         [tableView setUserInteractionEnabled:NO];
     }

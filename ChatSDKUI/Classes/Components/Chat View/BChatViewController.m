@@ -190,7 +190,9 @@
     }];
     
     if (!self.sendBarView.text.length && [_thread respondsToSelector:@selector(draft)]) {
-        self.sendBarView.text = [_thread draft];
+        [UIView performWithoutAnimation:^{
+            weakSelf.sendBarView.text = [weakSelf.thread draft];
+        }];
     }
     
     // Add the initial batch of messages

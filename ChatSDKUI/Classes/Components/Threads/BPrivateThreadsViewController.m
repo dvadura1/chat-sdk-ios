@@ -69,7 +69,7 @@
         // Create group with group name
         [BChatSDK.thread createThreadWithUsers:users name:groupName threadCreated:^(NSError *error, id<PThread> thread) {
             if (!error) {
-                [strongSelf pushChatViewControllerWithThread:thread];
+                [strongSelf pushChatViewControllerWithThread:thread animated:YES];
             }
             else {
                 [strongSelf alertWithTitle:[NSBundle t:bErrorTitle] withMessage:[NSBundle t:bThreadCreationError]];
