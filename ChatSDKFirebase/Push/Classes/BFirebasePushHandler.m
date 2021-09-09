@@ -15,7 +15,7 @@
 
 -(instancetype) init {
     if((self = [super init])) {
-        [FIRMessaging messaging].delegate = self;
+//        [FIRMessaging messaging].delegate = self;
     }
     return self;
 }

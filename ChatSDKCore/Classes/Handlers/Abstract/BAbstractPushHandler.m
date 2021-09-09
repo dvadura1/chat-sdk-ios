@@ -33,15 +33,17 @@
     return self;
 }
 
--(void) registerForPushNotificationsWithApplication: (UIApplication *) app launchOptions: (NSDictionary *) options {
+-(void) registerForPushNotifications {
     
         UNUserNotificationCenter * center = [UNUserNotificationCenter currentNotificationCenter];
-        notificationDelegate = [[BLocalNotificationDelegate alloc] init];
+        if (!notificationDelegate) {
+            notificationDelegate = [[BLocalNotificationDelegate alloc] init];
+        }
         center.delegate = notificationDelegate;
         
         void (^handler)(BOOL, NSError *) = ^(BOOL granted, NSError * error) {
             if(granted) {
-                [BChatSDK.shared.logger log:@"Local notifications granted"];
+                /*[BChatSDK.shared.logger log:@"Local notifications granted"];
                 
                 UNTextInputNotificationAction * replyAction = [UNTextInputNotificationAction actionWithIdentifier:bChatSDKReplyAction
                                                                                                             title:[NSBundle t: bReply]
@@ -64,7 +66,7 @@
                 
                 [center getNotificationSettingsWithCompletionHandler:^(UNNotificationSettings * settings) {
                     NSLog(@"Settings");
-                }];
+                }];*/
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [[UIApplication sharedApplication] registerForRemoteNotifications];
@@ -164,7 +166,9 @@
     assert(NO);
 }
 
-
-
+-(void) setLocalNotificationDelegate:(BLocalNotificationDelegate *) delegate {
+    notificationDelegate = delegate;
+    [UNUserNotificationCenter currentNotificationCenter].delegate = notificationDelegate;
+}
 
 @end

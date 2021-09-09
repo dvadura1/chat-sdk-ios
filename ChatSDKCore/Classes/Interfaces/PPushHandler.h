@@ -11,6 +11,8 @@
 
 #import <ChatSDK/PMessage.h>
 
+@class BLocalNotificationDelegate;
+
 // Setup some defines for push notifications
 #define bAction @"action"
 #define bAlert @"ios-alert"
@@ -32,13 +34,15 @@
 
 - (void) application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo;
 
--(void) registerForPushNotificationsWithApplication: (UIApplication *) app launchOptions: (NSDictionary *) options;
+-(void) registerForPushNotifications;
 
 -(void) subscribeToPushChannel: (NSString *) channel;
 -(void) unsubscribeFromPushChannel: (NSString *) channel;
 
 -(NSDictionary *) pushDataForMessage: (id<PMessage>) message;
 -(void) sendPushNotification: (NSDictionary *) data;
+
+-(void) setLocalNotificationDelegate:(BLocalNotificationDelegate *) delegate;
 
 @end
 

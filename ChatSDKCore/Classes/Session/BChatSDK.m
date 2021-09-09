@@ -177,9 +177,9 @@ static BChatSDK * instance;
 +(BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [application setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
     
-    if(BChatSDK.push && BChatSDK.config.shouldAskForNotificationsPermission) {
-        [BChatSDK.push registerForPushNotificationsWithApplication:application launchOptions:launchOptions];
-    }
+//    if(BChatSDK.push && BChatSDK.config.shouldAskForNotificationsPermission) {
+//        [BChatSDK.push registerForPushNotificationsWithApplication:application launchOptions:launchOptions];
+//    }
     return YES;
 }
 

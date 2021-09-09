@@ -19,5 +19,4 @@
     BLocalNotificationDelegate * notificationDelegate;
 }
 
-
 @end

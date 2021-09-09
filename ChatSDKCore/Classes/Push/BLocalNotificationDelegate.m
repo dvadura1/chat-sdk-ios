@@ -39,6 +39,7 @@
         
     }
     
+    NSLog(@"showLocalNotification = %d", showLocalNotification);
     if (showLocalNotification) {
         completionHandler(UNNotificationPresentationOptionBadge | UNNotificationPresentationOptionSound | UNNotificationPresentationOptionAlert);
     }
@@ -70,9 +71,9 @@
             }
         }
     }
-    else {
-        [BChatSDK application:[UIApplication sharedApplication] didReceiveRemoteNotification:userInfo];
-    }
+//    else {
+//        [BChatSDK application:[UIApplication sharedApplication] didReceiveRemoteNotification:userInfo];
+//    }
 
     completionHandler();
 }
