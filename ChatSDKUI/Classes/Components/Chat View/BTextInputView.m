@@ -402,8 +402,8 @@
 }
 
 -(float) getTextHeight: (NSString *) text {
-    NSString * nonBlankText = [text stringByReplacingOccurrencesOfString:@" " withString:@"_"];
-    return [nonBlankText boundingRectWithSize:CGSizeMake(_textView.contentSize.width - 1, CGFLOAT_MAX)
+    NSString * nonBlankText = text;//[text stringByReplacingOccurrencesOfString:@" " withString:@"_"];
+    return [nonBlankText boundingRectWithSize:CGSizeMake(_textView.contentSize.width, CGFLOAT_MAX)
                                    options:NSStringDrawingUsesLineFragmentOrigin
                                 attributes:@{NSFontAttributeName: _textView.font}
                                    context:Nil].size.height;
@@ -453,6 +453,7 @@
 -(void) setText: (NSString *) text {
     _textView.text = text;
     [self textViewDidChange:_textView];
+    [self resizeToolbar];
 }
 
 -(NSString *) text {
