@@ -99,7 +99,8 @@
 
 -(void) loadThreads {
     [_threads removeAllObjects];
-    [_threads addObjectsFromArray:[BChatSDK.thread threadsWithType:bThreadFilterPrivateThread includeDeleted:NO]];
+    NSArray *threads = [[BChatSDK.thread threadsWithType:bThreadFilterPrivateThread includeDeleted:NO] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"otherUser != NULL"]];
+    [_threads addObjectsFromArray:threads];
 }
 
 -(void) updateLocalNotificationHandler {
