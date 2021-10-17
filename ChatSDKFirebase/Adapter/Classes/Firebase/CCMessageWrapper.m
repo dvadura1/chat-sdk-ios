@@ -119,6 +119,7 @@
 -(RXPromise *) deserialize: (NSDictionary *) value {
     
     RXPromise * promise = [RXPromise new];
+    NSString * entityID = BChatSDK.currentUser.entityID;
         
     NSNumber * messageType = value[bType];
     if (messageType) {
@@ -135,6 +136,9 @@
         [_model setReadStatus:readReceipts];
         // TODO: Remove this
         //[_model setReadReceipts:readReceipts];
+    }
+    if ([readReceipts[entityID][bStatus] intValue] == bMessageReadStatusRead) {
+        [_model setRead:@YES];
     }
     
     NSDictionary * meta = value[bMetaPath];

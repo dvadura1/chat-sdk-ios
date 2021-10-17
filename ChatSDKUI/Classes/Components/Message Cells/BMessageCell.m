@@ -149,13 +149,14 @@
     // Set the message for later use
     _message = message;
     
-    BOOL isMine = message.senderIsMe;
-    if (isMine) {
-        [self setReadStatus:message.messageReadStatus];
-    }
-    else {
-        [self setReadStatus:bMessageReadStatusHide];
-    }
+//    BOOL isMine = message.senderIsMe;
+//    if (isMine) {
+//        [self setReadStatus:message.messageReadStatus];
+//    }
+//    else {
+//        [self setReadStatus:bMessageReadStatusHide];
+//    }
+    [self setReadStatus:bMessageReadStatusHide];
     
     bMessagePos position = message.messagePosition;
     id<PElmMessage> nextMessage = message.nextMessage;
