@@ -743,11 +743,11 @@
         });
     }
     
-    if ([cell isKindOfClass:[BTextMessageCell class]]) {
-        NSString * string = cell.message.text;
-        UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
-        pasteboard.string = string;
-    }
+//    if ([cell isKindOfClass:[BTextMessageCell class]]) {
+//        NSString * string = cell.message.text;
+//        UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+//        pasteboard.string = string;
+//    }
 }
 
 // This observer looks at whether the audio is ready to play then returns the loading promise

@@ -389,18 +389,6 @@
     [self resizeToolbar];
 }
 
--(float) getTextBoxTextHeight {
-    NSString * text = _textView.text;
-    
-    
-    // If it ends in a new line this isn't included in the size so add an extra character
-    if ([text hasSuffix:@"\n"] || [text isEqualToString:@""]) {
-        text = [text stringByAppendingString:@"-"];
-    }
-    
-    return [self getTextHeight:text];
-}
-
 -(float) getTextHeight: (NSString *) text {
     NSString * nonBlankText = text;//[text stringByReplacingOccurrencesOfString:@" " withString:@"_"];
     return [nonBlankText boundingRectWithSize:CGSizeMake(_textView.contentSize.width, CGFLOAT_MAX)
@@ -468,7 +456,7 @@
     float newHeight = MAX(_textView.font.lineHeight, [self measureHeightOfUITextView:_textView]);
     
     // Calcualte the new textview height
-    float textBoxHeight = newHeight + bTextViewVerticalPadding;
+    float textBoxHeight = MIN(newHeight + bTextViewVerticalPadding, 122.0);
 
     // Set the toolbar height - the text view will resize automatically
     // using autolayout
