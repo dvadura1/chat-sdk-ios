@@ -1071,9 +1071,9 @@
         }
         
         if (scroll || force) {
-            NSIndexPath * indexPath = [NSIndexPath indexPathForItem:lastRow inSection:lastSection];
+//            NSIndexPath * indexPath = [NSIndexPath indexPathForItem:lastRow inSection:lastSection];
 //            [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:animated];
-            CGPoint offset = CGPointMake(0, self.tableView.contentSize.height - self.tableView.frame.size.height);
+            CGPoint offset = CGPointMake(0, MAX(-self.tableView.contentInset.top, self.tableView.contentSize.height - self.tableView.frame.size.height));
             [self.tableView setContentOffset:offset];
         }
     });
