@@ -35,6 +35,7 @@
 - (void) application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo;
 
 -(void) registerForPushNotifications;
+-(void) unregisterForPushNotifications;
 
 -(void) subscribeToPushChannel: (NSString *) channel;
 -(void) unsubscribeFromPushChannel: (NSString *) channel;

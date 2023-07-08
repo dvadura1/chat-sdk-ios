@@ -11,7 +11,9 @@
 #import <UserNotifications/UserNotifications.h>
 #import <ChatSDK/Core.h>
 
-@implementation BAbstractPushHandler
+@implementation BAbstractPushHandler {
+    id<PUser> user;
+}
 
 -(instancetype) init {
     if((self = [super init])) {
@@ -23,9 +25,9 @@
         }] withName:bHookWillLogout];
         
         [BChatSDK.hook addHook:[BHook hook:^(NSDictionary * data) {
-            id<PUser> user = data[bHook_PUser];
-            if (user) {
-                [self subscribeToPushChannel:user.pushChannel];
+            self->user = data[bHook_PUser];
+            if (self->user) {
+                [self subscribeToPushChannel:self->user.pushChannel];
             }
         }] withName:bHookDidAuthenticate];
         
@@ -78,6 +80,12 @@
         [center requestAuthorizationWithOptions:UNAuthorizationOptionBadge | UNAuthorizationOptionSound | UNAuthorizationOptionAlert
                               completionHandler:handler];
         
+}
+
+- (void) unregisterForPushNotifications {
+    if (self->user) {
+        [self unsubscribeFromPushChannel:self->user.pushChannel];
+    }
 }
 
 - (void) application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
